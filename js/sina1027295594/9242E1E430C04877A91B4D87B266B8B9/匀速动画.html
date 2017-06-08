@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="reset.css">
+    <style>
+        #box{background-color: indianred;
+            width: 100px;height: 100px;
+            position: absolute;
+        }
+        input:nth-child(2),input:nth-child(3),input:nth-child(4){
+            width: 60px;height: 30px;line-height: 30px;
+            position: absolute;
+            left: 190px;
+            top: 30px;
+
+        }
+        input:nth-child(1){
+
+            line-height: 40px;
+            width: 150px;height: 50px;
+            margin: 20px auto 20px 100px;
+        }
+        button{
+            line-height: 40px;
+            width: 150px;height: 50px;
+            position: absolute;
+            right: 100px;top: 20px;
+
+        }
+    </style>
+</head>
+<body>
+<input type="button" value="Choose Speed">
+<input type="button" value="3">
+<input type="button" value="5">
+<input type="button" value="8">
+<button id="drop">Drop</button>
+<div id="box"></div>
+<script src="../3、DOM.js"></script>
+<script>
+    var oBtn=document.getElementsByTagName('input');
+    var oBox=document.getElementById('box');
+    var BtnDr=document.getElementById('drop');
+    var winW=document.documentElement.clientWidth||document.body.clientWidth;
+    var boxW=oBox.offsetWidth;
+    var step=winW-boxW;
+    var winH=document.documentElement.clientHeight||document.body.clientHeight;
+    var fall=winH-oBox.offsetHeight;
+    var btn1={n:0};
+    var btn2={n:0};
+    var btn3={n:0};
+    var arrB=[btn1,btn2,btn3];
+    var n=0,m=0;
+    //隐藏小btn
+    for(var i=1;i<oBtn.length;i++){
+        oBtn[i].style.display='none'
+    }
+    //调出btn 设置点击事件
+    oBtn[0].onclick=function () {
+        for(var i=1;i<oBtn.length;i++){
+            oBtn[i].style.display='inline-block';
+            moveButton(i);
+            oBtn[i].index=i;//ipo
+            oBtn[i].onclick=function () {
+                move(oBtn[this.index].value,'normal');
+                var t=oBtn[this.index].value;
+                BtnDr.onclick=function () {
+                    move(t,'drop')
+                }
+            };//此时this指向oBtn[i]
+        }
+    };
+    //btn移动事件
+    function moveButton(btnNum) {
+        oBtn.timer=setInterval(function () {
+            countButton(btnNum)
+        },10)
+    }
+    function countButton(num) {
+        if (oBtn[num].offsetLeft<(250+150*num)){
+            arrB[num-1].n+=num;
+            oBtn[num].style.left=(190+arrB[num-1].n)+'px';
+        }
+    }
+    //点击事件已移动到遍历中
+//    oBtn[i].onclick=function () {
+//        move(oBtn[i].value)
+//    };
+//    oBtn[2].onclick=function () {
+//        move(oBtn[i].value)
+//    };
+//    oBtn[3].onclick=function () {
+//        move(oBtn[i].value)
+//    };
+    //盒子移动事件
+    function move(speed,way) {
+        clearInterval(oBox.timer);
+        oBox.timer=setInterval(function () {
+            count(speed,way)
+        },10)
+    }
+    function count(speed,way) {
+        if (oBox.offsetLeft+3<step&&oBox.offsetTop+3<fall){
+            this.n+=parseInt(step/(100*speed));
+            if (way==='normal'){
+            oBox.style.left=this.n+'px'
+            }
+            else{
+                this.m+=parseInt(step/(100*speed));
+                oBox.style.left=this.n+'px';
+                oBox.style.top=(90+this.m)+'px'
+            }//盒子下坠事件
+        }
+    }
+
+
+</script>
+</body>
+</html>

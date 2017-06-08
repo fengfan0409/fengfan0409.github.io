@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../3、DOM.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="../reset.css" type="text/css">
+    <style>
+        .box{
+            width: 150px;height: 150px;background-color: red;
+            position: absolute;
+        }
+        button{
+
+        }
+    </style>
+</head>
+<body>
+<button>开始</button>
+<button>加速</button>
+<div class="box"></div>
+<script>
+    //基本数据类型(number string boolean null undefined)操作值
+
+    //引用数据类型(obj  function)操作地址
+
+    //obj包含:对象 数组 正则 时间 Math ...
+
+    //typeof可以检测基本数据类型和函数数据类型,不能检测到obj里具体的某一类,只返回object
+//    var Arr=[];
+//    console.log(Arr.constructor) ;//obj
+//    console.log(typeof null);//obj
+//    console.log(typeof undefined);//undefined
+    // instanceof :判断某一个实例是否属于某个类
+//    var ary=[1,2,3];//字面量方式创建的实例Array
+    //类: 内置的类{Number String Boolean Null Undefined Function Object Array RegExp Date
+    //自定义类 : 自己定义一个类
+//    function Fn() {
+//
+//    }
+//    var f=new Fn();//自定义类
+//    Array.prototype=new RegExp();
+//    var Arr=new Array;
+//    console.log(Arr instanceof RegExp);//说明内置类的原型只能扩展不能修改,自定义类可以修改
+//    Object.prototype.aa=function() {
+//    var num=1;
+//    };//原型上新增的方法,可以遍历出来,但是内置的则不可枚举
+//var obj= {
+//    name: 'ff',
+//    age:22
+//};
+//
+//for(var key in obj){
+//    console.log(key+':'+obj[key]+'('+obj.hasOwnProperty(key)+')')
+//}
+//动画
+    var winW=document.documentElement.clientWidth||document.body.clientWidth;
+    var oBox=document.getElementsByClassName('box')[0];
+    var boxW=oBox.offsetWidth;
+    var obtn=document.getElementsByTagName('button');
+    var count=0;
+    window.onload=function () {
+        move(oBox)
+    };
+
+    obtn[0].onclick=function () {
+        var timer=setInterval(reply(),1);
+    };
+    function reply() {
+        count+=2;console.log(count);
+        return count
+    }
+    function move(curEle) {
+        curEle.style.left=count+'px'
+    }
+    console.log(oBox.style.left);
+
+</script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../reset.css" type="text/css">
+    <script src="../3、DOM.js" type="text/javascript"></script>
+    <style>
+        #box{ position: absolute;
+            width: 150px;height: 150px;background-color: indianred;
+        }
+        input{margin-left:100px ;margin-bottom: 20px;
+            width: 100px;height: 50px;line-height: 40px;
+
+        }
+    </style>
+</head>
+<body>
+<input type="button" value="GoRight">
+<input type="button" value="GoLeft">
+<input type="button" value="GoFast">
+<div id="box"></div>
+<script>
+    var oBtn=document.getElementsByTagName('input');
+    var oBox=document.getElementById('box');
+    var winW=document.documentElement.clientWidth||document.body.clientWidth;
+    var boxW=oBox.offsetWidth;
+    var n=0;
+    var objA={
+        target:0
+    };
+    var objB={
+        target:0
+    };
+    oBtn[0].onclick=function () {
+        objB.target=0;
+        move('GoLeft')
+    };
+    oBtn[1].onclick=function () {
+        objA.target=0;
+        move('GoRight')
+    };
+    oBtn[2].onclick=function () {
+        move('GoEqual')
+    };
+    function move(judge) {
+        clearInterval(oBox.index);
+        oBox.index=setInterval(function () {
+            count(judge)
+        },100);
+    }
+    function count(judge) {
+        if (judge==='GoLeft'){
+            if (oBox.offsetLeft<(winW-boxW)){
+                if (objA.target<22){objA.target++;}
+                this.n+=objA.target;
+                oBox.style.left=n+"px";
+            }
+            else clearInterval(oBox.index)
+        }
+        else     {
+            if (oBox.offsetLeft>0){
+                if (objB.target<22){objB.target++;}
+                this.n-=objB.target;
+                oBox.style.left=n+"px";
+            }
+            else clearInterval(oBox.index)
+        }
+    }
+
+</script>
+</body>
+</html>

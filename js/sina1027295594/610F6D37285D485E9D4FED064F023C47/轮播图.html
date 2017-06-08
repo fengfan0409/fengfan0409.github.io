@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../reset.css">
+    <style>
+        #outer{
+            position: relative;
+            margin: 150px auto;
+            width: 800px;
+            height: 240px;
+
+        }
+        #main{
+            width: 800px;
+            height: 240px;
+            overflow: hidden;
+        }
+        #inner{
+            width: 4000px;
+            height: 100%;
+        }
+        img{width: 20%;height: 100%;
+            float: left;
+        }
+        #list{
+            position: absolute;
+            top: 210px;
+            left: 320px;
+        }
+        #list li{
+            float: left;
+            margin: 0 10px 0 10px;
+            width: 20px;height: 20px;
+            border-radius: 10px;
+            background-color: #eeeeee;
+        }
+        #left{
+            font-size: 20px;
+            width: 20px;height: 60px;
+            line-height: 60px;
+            background-color: #afafaf;
+            position: absolute;
+            top: 90px;left: 0;
+        }
+        #right{
+            font-size: 20px;
+            width: 20px;height: 60px;
+            background-color: #BEBEBE;
+            line-height: 60px;
+            position: absolute;
+            top: 90px;  right: 0;
+        }
+        #focus:hover{
+            cursor: pointer;
+        }
+        #left:hover{
+            background-color: #6a6a6a;
+            transition:background-color 1s ;
+        }
+        #right:hover{
+            background-color: #6a6a6a;
+            transition:background-color 1s ;
+        }
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div id="main">
+        <div id="inner">
+            <img src="img/01.png" alt="">
+            <img src="img/02.png" alt="">
+            <img src="img/03.png" alt="">
+            <img src="img/04.png" alt="">
+            <img src="img/01.png" alt="">
+        </div>
+    </div>
+
+    <ul id="list">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <ul id="focus">
+        <li id="left"><</li>
+        <li id="right">></li>
+    </ul>
+</div>
+<script src="../3、DOM.js"></script>
+<script src="../animate.js"></script>
+<script>
+    var oAll=document.getElementById('outer');
+    var oMain=document.getElementById('main');
+    var oBox=document.getElementById('inner');
+    var oUl=document.getElementById('list');
+    var oLi=oUl.getElementsByTagName('li');
+    var oFocus=document.getElementById('focus');
+    var oLeft=document.getElementById('left');
+    var oRight=document.getElementById('right');
+    var sign=0;
+    oLi.sign=0;
+    //开始样式
+    oLi[0].style.backgroundColor='#8D8D8D';
+    oFocus.style.display='none';
+    //边界显示隐藏
+    oAll.onmouseover=function () {
+        show();
+    };
+    function show() {
+        oFocus.style.display='inline-block';
+    }
+    oAll.onmouseout=function () {
+        hide()
+    };
+    function hide() {
+        oFocus.style.display='none';
+    }
+    //轮播主函数
+    var autoMove=function () {
+        clearInterval(oMain.timer);
+        oMain.timer=setInterval(tab,2000)
+    };
+    autoMove();
+    function tab() {
+            oMain.t=setInterval(function(){
+                tabMove()
+            },10)
+        }
+        //轮播速度调试
+        function tabMove() {
+            this.sign+=1;
+            oMain.scrollLeft+=20;
+            if (this.sign===40){
+                clearInterval(oMain.t);
+                this.sign=0;
+                if (oMain.scrollLeft===3200){
+                    oMain.scrollLeft=0;
+                    oLi.sign=0
+                }
+                else {oLi.sign+=1;}
+                listMove(oLi.sign)
+            }
+
+//            for(var i=1;i<=oBox.children.length;i++){
+//                if (oMain.scrollLeft===800*i){
+//                     oMain.sign=1
+//                }
+//            }
+//            if (oMain.sign!==1){
+//                oMain.scrollLeft+=20;
+//            }
+        }
+        //li变化
+    function listMove(num) {
+        for(var i=0;i<oLi.length;i++){
+            if (i===num){
+                oLi[i].style.backgroundColor='#8D8D8D'
+            }
+            else {
+                oLi[i].style.backgroundColor='#eeeeee'
+            }
+
+        }
+    }
+    //li点击事件
+    for(var i=0;i<oLi.length;i++){
+        liClick(i)
+    }
+    function liClick(i) {
+        oLi[i].onmouseover=function () {
+            clearInterval(oMain.timer)
+        };
+        oLi[i].onmouseout=function () {
+            autoMove();
+        }
+    }
+    //切换
+
+</script>
+</body>
+</html>

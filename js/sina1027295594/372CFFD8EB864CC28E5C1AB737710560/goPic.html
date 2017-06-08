@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../reset.css">
+    <style>
+        .main{
+            margin: 100px auto;
+            width: 800px;
+            height: 200px;
+            border: 1px solid #000000;overflow: hidden;
+        }
+        #box{
+            width: 3800px;height: 200px;
+        }
+        .pic{width: 200px;height: 200px;
+            float: left;
+            padding: 1px;position: relative;
+        }
+        img{width: 198px;height: 198px}
+        .pic:hover{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <div id="box">
+        <div class="pic">
+            <img src="img/1.png" alt="">
+        </div>
+        <div class="pic">
+            <img src="img/2.png" alt="">
+        </div>
+        <div class="pic">
+            <img src="img/3.png" alt="">
+        </div>
+        <div class="pic">
+            <img src="img/4.png" alt="">
+        </div>
+        <div class="pic">
+            <img src="img/5.png" alt="">
+        </div>
+        <div class="pic">
+            <img src="img/6.png" alt="">
+        </div>
+        <div class="pic">
+            <img src="img/7.png" alt="">
+        </div>
+        <div class="pic">
+            <img src="img/8.png" alt="">
+        </div>
+        <div class="pic">
+            <img src="img/9.png" alt="">
+        </div>
+        <div class="pic">
+            <img src="img/10.jpg" alt="">
+        </div>
+        <div class="pic">
+            <img src="img/11.jpg" alt="">
+        </div>
+        <div class="pic">
+            <img src="img/12.jpg" alt="">
+        </div>
+        <div class="pic">
+            <img src="img/13.jpg" alt="">
+        </div>
+        <div class="pic">
+            <img src="img/14.jpg" alt="">
+        </div>
+        <div class="pic">
+            <img src="img/15.jpg" alt="">
+        </div>
+        <div class="pic">
+            <img src="img/1.png" alt="">
+        </div>
+        <div class="pic">
+            <img src="img/2.png" alt="">
+        </div>
+        <div class="pic">
+            <img src="img/3.png" alt="">
+        </div>
+        <div class="pic">
+            <img src="img/4.png" alt="">
+        </div>
+    </div>
+</div>
+<script src="../3、DOM.js"></script>
+<script>
+    var oMain=document.getElementsByClassName('main')[0];
+    var oBox=document.getElementById('box');
+    var picList=document.getElementsByClassName('pic');
+    var imgList=document.getElementsByTagName('img');
+    (function move() {
+            oMain.timer=setInterval(count,10)
+    })();
+    function count() {
+        oMain.scrollLeft++;
+        if (oMain.scrollLeft===3000){
+            oMain.scrollLeft=0;
+        }
+    }
+    for(var i=0;i<picList.length;i++){
+        picList[i].index=i;
+        picList[i].onmouseover=function () {
+            stop();
+            picList[this.index].style.top='-3px'
+        };
+        picList[i].onmouseout=function () {
+            picList[this.index].style.top='';
+            cont()
+        }
+    }
+    function stop() {
+        clearInterval(oMain.timer)
+    }
+    function cont() {
+        oMain.timer=setInterval(count,10)
+    }
+</script>
+</body>
+</html>

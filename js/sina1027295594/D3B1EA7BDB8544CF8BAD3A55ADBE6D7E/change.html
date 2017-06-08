@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="reset.css">
+    <style>
+        #box{background-color: indianred;
+            width: 200px;height: 200px;
+            position: absolute;
+        }
+        input:nth-child(1){
+
+            line-height: 40px;
+            width: 150px;height: 50px;
+            margin: 20px auto 20px 0;
+        }
+        #car{position: fixed;bottom: 20px;right: 20px;
+            width: 25px;height: 25px;
+            background:url("gwc.png");
+            background-position: -35px 0;
+            cursor: pointer;
+        }
+        #car:hover{
+            background-position: 0 0;
+        }
+    </style>
+</head>
+<body>
+<input type="button" value="go">
+
+<div id="box"></div>
+<div id="car"></div>
+<script src="../3、DOM.js"></script>
+<script>
+    var oBtn=document.getElementsByTagName('input')[0];
+    var oBox=document.getElementById('box');
+    var winW=document.documentElement.clientWidth||document.body.clientWidth;
+    var boxW=oBox.offsetWidth;
+    var step=winW-boxW;
+    var winH=document.documentElement.clientHeight||document.body.clientHeight;
+    var boxH=oBox.offsetHeight;
+    var fall=winH-boxH;
+    var n=null;
+    var m=null;
+    var o=null;
+//    var trN=null,trM=null;
+    oBtn.addEventListener('click',change,true);
+    function change() {
+        clearInterval(oBox.timer);
+        oBox.timer=setInterval(count,10)
+    }
+
+    function count() {
+        if (oBox.offsetLeft<winW&&oBox.offsetTop<winH){
+            this.n+=parseInt(winW/40);
+            this.m+=parseInt((winH-90)/40);
+            oBox.style.left=this.n+'px';
+            oBox.style.top=(90+this.m)+'px';
+            var trN=(200-Math.floor(this.n*200/winW));
+            if (trN<0){
+                oBox.style.width=0;
+                oBox.style.height=0;
+            }
+            else {
+                oBox.style.width=trN+'px';
+                oBox.style.height=trN+'px';
+            }
+        }
+    }
+
+    var oCar=document.getElementById('car');
+    oCar.onclick=function () {
+        buyWhat()
+    };
+    function buyWhat() {
+        clearInterval(oCar.timer);
+        remove();
+        oCar.timer=setInterval(countBuy,10);
+    }
+    function remove() {
+        clearInterval(oBox.timer);
+        oBox.style.position='fixed';
+        oBox.style.left='';
+        oBox.style.top='';
+        utils.setCss(oBox,'right',45);
+        utils.setCss(oBox,'bottom',45);
+    }
+    function countBuy() {
+
+        if (oBox.offsetWidth<200&&oBox.offsetHeight<200){
+            this.o++;
+            oBox.style.width=this.o*10+'px';
+            oBox.style.height=this.o*10+'px';
+        }
+    }
+</script>
+</body>
+</html>
